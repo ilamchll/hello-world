@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Atividade AMII</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+</head>
+<body>
+  <script>  
+    let ctrlX, ctrlY, ctrlSpeed;
+    let clicks = [];
+    const SIZE = 30;
+    const SPEED = 2;
+
+    function setup() {
+      createCanvas(400, 400);
+      ctrlX     = width/2;
+      ctrlY     = height - SIZE*2;
+      ctrlSpeed = SPEED * 2;
+      textSize(12);
+    }
+
+    function draw() {
+      background(240)
+
+      fill(50, 80, 200);
+      rect(ctrlX, ctrlY, SIZE, SIZE);
+      if (keyIsDown(LEFT_ARROW))  ctrlX -= ctrlSpeed;
+      if (keyIsDown(RIGHT_ARROW)) ctrlX += ctrlSpeed;
+      if (keyIsDown(UP_ARROW))    ctrlY -= ctrlSpeed;
+      if (keyIsDown(DOWN_ARROW))  ctrlY += ctrlSpeed;
+     
+      ctrlX = constrain(ctrlX, 0, width - SIZE);
+      ctrlY = constrain(ctrlY, 0, height - SIZE);
+
+      
+      fill(0);
+      text("Teclas: ← ↑ → ↓ movem o quadrado azul", 10, height-40);
+    }
+
+  </script>
+</body>
+</html>
