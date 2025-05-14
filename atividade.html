@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>atividade, desafio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section class="sketch-container">
+    <h2>Bolinhas</h2>
+    <div id="sketch"></div>
+  </section>
+
+  <!-- p5.js -->
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.3/lib/p5.min.js"></script>
+  <script src="vetores.js"></script>
+<script>
+    new p5((s) => {
+      let posicoes = [];
+      let velocidades = [];
+      let cores = [];
+      let raios = [];
+      
+
+      function novaBola(x, y) {
+        posicoes.push(s.createVector(x, y));
+        velocidades.push(s.createVector(s.random(-3, 3), s.random(-3, 3)));
+        cores.push(s.color(s.random(360), 80, 90)); 
+        raios.push(s.random(10, 30));
+      }
+
+      s.setup = () => {
+        s.colorMode(s.HSB, 360, 100, 100);
+        s.createCanvas(640, 480).parent('sketch');
+
+        for (let i = 0; i < 5; i++) {
+          novaBola(s.random(s.width), s.random(s.height));
+        }
+      };
+
+      s.draw = () => {
+        s.background(220);
+
+        for (let i = 0; i < posicoes.length; i++) {
+          let pos = posicoes[i];
+          let vel = velocidades[i];
+          let r = raios[i];
+
+          pos.add(vel);
+
+          if (pos.x - r < 0 || pos.x + r > s.width) vel.x *= -1;
+          if (pos.y - r < 0 || pos.y + r > s.height) vel.y *= -1;
+
+          s.noStroke();
+          s.fill(cores[i]);
+          s.ellipse(pos.x, pos.y, r * 2);
+
+          s.stroke(0, 0, 20);
+          s.line(pos.x, pos.y, pos.x + vel.x * 5, pos.y + vel.y * 5);
+        }
+      };
+      
+       s.mousePressed = () => {
+        novaBola(s.mouseX, s.mouseY);
+        posicoes.push(s.createVector(x, y));
+        velocidades.push(s.createVector(s.random(-3, 3), s.random(-3, 3)));
+      };
+
+    });
+</script>
+</body>
